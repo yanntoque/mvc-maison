@@ -1,0 +1,20 @@
+
+body{
+    background-color: #3c5aa6 !important;
+}
+
+.logo{
+    text-align: center;
+    width: 50%;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+}
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+}
