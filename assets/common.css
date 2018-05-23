@@ -1,6 +1,7 @@
 
 body{
     background-color: #3c5aa6 !important;
+    color: #ffffff !important;
 }
 
 .logo{
@@ -17,4 +18,28 @@ footer {
     width: 100%;
     color: white;
     text-align: center;
+}
+
+/* Button home page  */
+.btn-xlarge {
+    padding: 18px 28px !important;
+    font-size: 45px !important;
+    line-height: normal !important;
+    -webkit-border-radius: 8px !important;
+    -moz-border-radius: 8px !important;
+    border-radius: 8px !important;
+}
+.btn-home{
+    position: fixed !important;
+    top: 50% !important;
+    left: 45% !important;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%) !important;
+}
+.btn-home-login{
+    position: fixed !important;
+    top: 50% !important;
+    left: 60% !important;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%) !important;
 }

@@ -7,6 +7,7 @@
  */
 #TO DO : Connexion et création de compte
 ?>
-<div class="container">
-        <h1>Connexion ou créer compte</h1>
+<div class="btn btn-group">
+    <a class="btn btn-primary btn-lg btn-home-login btn-xlarge" href="index.php?root=login">Me connecter</a>
+    <a class="btn btn-info btn-lg btn-home btn-xlarge" href="index.php?root=inscription">Créer mon compte</a>
 </div>
