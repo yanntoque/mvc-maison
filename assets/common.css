@@ -4,6 +4,7 @@ body{
     color: #ffffff !important;
 }
 
+
 .logo{
     text-align: center;
     width: 50%;
@@ -19,7 +20,17 @@ footer {
     color: white;
     text-align: center;
 }
-
+.starter > input{ /* HIDE RADIO */
+    visibility: hidden; /* Makes input not-clickable */
+    position: absolute; /* Remove input from document flow */
+}
+.starter > input + img{ /* IMAGE STYLES */
+    cursor:pointer;
+    border:2px solid transparent;
+}
+.starter > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+    border:2px solid #f00;
+}
 /* Button home page  */
 .btn-xlarge {
     padding: 18px 28px !important;
