@@ -41,13 +41,56 @@ function nomExiste($nom)
  * @param $credit
  * @return bool
  */
-function insererDresseur($nom, $mdp, $credit)
+function insererDresseur($nom, $email, $mdp, $credit)
 {
     $dbcon = connexion();
-    $query = "INSERT INTO dresseur (nom, mdp, credit) VALUES (:nom, :mdp, :credit);";
+    $query = "INSERT INTO dresseur (nom, mail, mdp, credit) VALUES (:nom, :mail, :mdp, :credit);";
     $prep = $dbcon->prepare($query);
     $prep->bindValue(':nom', $nom );
+    $prep->bindValue(':mail', $email);
     $prep->bindValue(':mdp', $mdp );
     $prep->bindValue(':credit', $credit );
     return $prep->execute();
+}
+
+/**
+ * Retourne la liste des starter du jeu Pokémon Jaune
+ * @return array
+ */
+function getStarter(){
+    $dbcon = connexion();
+    $query = "SELECT id,nom FROM `pokemon` WHERE nom = \"Bulbizarre\" OR nom = \"Carapuce\" OR nom = \"Salamèche\";";
+    $resultat = $dbcon->query($query)->fetchAll(PDO::FETCH_ASSOC);
+    $list = [];
+    foreach($resultat as $row){
+        $list[$row['id']] = $row['nom'];
+    }
+    return $list;
+}
+
+/**
+ * Insere dans l'inventaire l'id du dresseur et l'id de son starter
+ * @param $idDresseur
+ * @param $idPokemon
+ * @return bool
+ */
+function insererStarter($idDresseur, $idPokemon){
+    $dbcon = connexion();
+    $query = "INSERT INTO inventaire (idDresseur, idPokemon) VALUES (:idDresseur, :idPokemon);";
+    $prep = $dbcon->prepare($query);
+    $prep->bindValue(':idDresseur', $idDresseur );
+    $prep->bindValue(':idPokemon', $idPokemon);
+    return $prep->execute();
+}
+
+/**
+ * Retourne l'id du dresseur en fonction de son nom ( Rapelle dans notre bdd les noms sont uniques)
+ * @param $nom
+ * @return mixed
+ */
+function getDresseurId($nom){
+    $dbcon = connexion();
+    $query = "SELECT id FROM `dresseur` WHERE nom = '$nom';";
+    $resultat = $dbcon->query($query)->fetch();
+    return $resultat;
 }

@@ -12,8 +12,23 @@
     <form action="index.php?root=inscription" method="post">
         <label >Je m'appelle :</label>
         <input class="form-control"  type="text" name="nom" placeholder="Sacha" required/>
+        <label >Mon adresse mail :</label>
+        <input class="form-control"  type="email" name="email" placeholder="Sacha@bourpalette.com" required/>
         <label>Mon mot de passe :</label>
         <input class="form-control" type="password" name="mdp" required/></br>
+        <label>Mon starter :</label>
+<!--        <select class="selectpicker" name="starter">-->
+        <?php
+            require_once 'util/fonctions.php';
+            $starters = getStarter();
+            foreach ($starters as $k => $v ){
+                echo "<label class='starter'>";
+                echo " <input type='radio' name='starter' value='$k' required><img src='assets/images/$k.png'></input>";
+                echo "</label>";
+            }
+            ?>
+<!--        </select>-->
+        <br>
         <input class="form-control btn btn-success" type="submit" value="Inscription">
     </form>
 </div>

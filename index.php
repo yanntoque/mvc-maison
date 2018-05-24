@@ -26,22 +26,31 @@ switch ($root) {
         break;
     case 'inscription':
         include('vues/inscription.php');
-        if (isset($_POST['nom']) && isset($_POST['mdp'])) {
+        if (isset($_POST['nom']) && isset($_POST['mdp']) && isset($_POST['email']) && isset($_POST['starter'])) {
             $_SESSION['nom'] = $_POST['nom'];
-                $nom = $_POST['nom'];
+            $nom = $_POST['nom'];
             $options = [
                 'cost' => 12,
             ];
+            $email = $_POST['email'];
             $mdp = password_hash($_POST['mdp'], PASSWORD_BCRYPT, $options);
+            $idStarter = $_POST['starter'];
             $a = nomExiste($nom);
             if ($a) {
-              echo "Malheuresement un dresseur est déjà enregistré avec ce nom dans notre pokedex des dresseurs :-(";
-            }else{
+                echo "Malheuresement un dresseur est déjà enregistré avec ce nom dans notre pokedex des dresseurs :-(";
+            } else {
                 $credit = 5000;
-                $inscrire = insererDresseur($nom, $mdp, $credit);
-                if ($inscrire) {
+
+                $inscrire = insererDresseur($nom, $email, $mdp, $credit);
+                $getDresseurId = getDresseurId($nom);
+                $idDresseur = reset($getDresseurId);
+                //   var_dump($idDresseur);
+
+
+                $inscrirestarter = insererStarter($idDresseur, $idStarter);
+                if ($inscrire && $inscrirestarter) {
                     echo "Vous avez bien été enregistré !";
-                }else{
+                } else {
                     echo "Votre inscription a malheureusement échouée ! ";
                 }
             }
