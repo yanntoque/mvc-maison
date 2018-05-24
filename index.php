@@ -56,5 +56,26 @@ switch ($root) {
             }
         }
         break;
+    case 'login':
+        include('vues/login.php');
+        if (isset($_POST['nom']) && isset($_POST['mdp'])) {
+            $_SESSION['nom'] = $_POST['nom'];
+            $nom = $_POST['nom'];
+            $mdp =  $_POST['mdp'];
+            $_SESSION['id'] = $idDresseur;
+            $verifLogin = verifLogin($nom, $mdp);
+            if ($verifLogin) {
+                header('location:index.php?root=pokemon');
+            } else {
+                echo 'Nom de user ou mot de passe non reconnus !';
+            }
+        }
+        break;
+    case 'logout':
+        include ('vues/logout.php');
+        break;
+    case 'pokemon':
+        include ('vues/pokemon.php');
+        break;
 }
 include("vues/fragment/footer.html");
