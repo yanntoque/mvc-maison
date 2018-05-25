@@ -99,19 +99,38 @@ function getDresseurId($nom)
 }
 
 /**
- * Vérifie les identifiants
+ * Récupère le nom du dresseur
  * @param $nom
  * @param $mdp
  * @return mixed
  */
-function verifLogin($nom, $mdp)
+function checkDresseurNom($nom)
 {
     $dbcon = connexion();
-    $query = "SELECT nom, mdp FROM dresseur  WHERE nom = :nom AND mdp= :mdp;";
+    $query = "SELECT nom FROM dresseur  WHERE nom = :nom;";
     $prep = $dbcon->prepare($query);
     $prep->bindValue(':nom', $nom);
-    $prep->bindValue(':mdp', $mdp);
-    return $prep->execute();
+    $prep->execute();
+    $resultat = $prep->fetch();
+    return $resultat;
+
+}
+
+/**
+ * Récupère le hash du dresseur
+ * @param $nom
+ * @param $mdp
+ * @return mixed
+ */
+function checkDresseurMdp($nom)
+{
+    $dbcon = connexion();
+    $query = "SELECT mdp FROM dresseur  WHERE nom = :nom;";
+    $prep = $dbcon->prepare($query);
+    $prep->bindValue(':nom', $nom);
+    $prep->execute();
+    $resultat = $prep->fetch();
+    return $resultat;
 
 }
 
@@ -133,4 +152,20 @@ function getPokemonByDresseurId($id)
         $list[$row['id']] = $row['nom'];
     }
     return $list;
+}
+
+/**
+ * Permet de récupérer le crédit d'un dresseur particulier
+ * @param $id
+ * @return mixed
+ */
+function getCreditByDresseurId($id)
+{
+    $dbcon = connexion();
+    $query = "SELECT credit FROM `dresseur` WHERE id = :id";
+    $prep = $dbcon->prepare($query);
+    $prep->bindValue(':id', $id);
+    $prep->execute();
+    $resultat = $prep->fetch();
+    return $resultat;
 }
