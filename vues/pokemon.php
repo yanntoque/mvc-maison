@@ -6,14 +6,15 @@
  * Time: 23:06
  */
 include("vues/fragment/homelogout.html");
-?>
-<h1>Mes pokémons <?php print_r($_SESSION['nom']);?></h1>
-<?php
 require_once 'util/fonctions.php';
 $getDresseurId = getDresseurId($_SESSION['nom']);
 $id = reset($getDresseurId);
-
+$credit = getCreditByDresseurId($id);
 ?>
+<div class="dresseurInfo">
+    <h1><?php print_r($_SESSION['nom']); ?> | <?php echo $credit[0]; ?> <span class="glyphicon glyphicon-ruble"></span>
+    </h1>
+</div>
 <table class="table table-bordered">
     <thead>
     <tr>
@@ -25,10 +26,10 @@ $id = reset($getDresseurId);
     <?php
 
     $lstPokemon = getPokemonByDresseurId($id);
-    foreach ($lstPokemon as $k => $v ){
+    foreach ($lstPokemon as $k => $v) {
         echo '<tr>';
-        echo '<td>'.$v.'</td>';
-        echo "<td><img src='assets/images/$k.png'></td>" ;
+        echo '<td>' . $k . '</td>';
+        echo "<td><img src='assets/images/$k.png'></td>";
         echo '</tr>';
     }
     ?>
