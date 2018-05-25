@@ -169,3 +169,23 @@ function getCreditByDresseurId($id)
     $resultat = $prep->fetch();
     return $resultat;
 }
+
+/**
+ * Retourne toutes les caractéristiques d'un pokémon
+ * @param $id
+ * @return array
+ */
+function getInfosByPokemonId($id)
+{
+    $dbcon = connexion();
+    $query = "SELECT * FROM  pokemon WHERE pokemon.id = :pokeId; ";
+    $prep = $dbcon->prepare($query);
+    $prep->bindValue(':pokeId', $id);
+    $prep->execute();
+    $resultat = $prep->fetchAll();
+    $list = [];
+    foreach ($resultat as $row) {
+        $list[] = [$row['id'], $row['nom'], $row['courbexp'], $row['evolution'], $row['type1'], $row['type2']];
+    }
+    return $list;
+}
