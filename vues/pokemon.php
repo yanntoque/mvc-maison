@@ -20,6 +20,7 @@ $credit = getCreditByDresseurId($id);
     <tr>
         <th>Identifiant dans le Pokédex</th>
         <th>Nom du pokémon</th>
+        <th>Détail</th>
     </tr>
     </thead>
     <tbody>
@@ -30,6 +31,7 @@ $credit = getCreditByDresseurId($id);
         echo '<tr>';
         echo '<td>' . $k . '</td>';
         echo "<td><img src='assets/images/$k.png'></td>";
+        echo "<td><a class='btn btn-info' href='index.php?root=detail&pokeId=$k'> Détail sur $v </a> </td>";
         echo '</tr>';
     }
     ?>

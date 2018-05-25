@@ -77,6 +77,9 @@ switch ($root) {
     case 'logout':
         include('vues/logout.php');
         break;
+    case 'detail':
+        include('vues/detail.php');
+        break;
     case 'pokemon':
         include('vues/pokemon.php');
         break;
