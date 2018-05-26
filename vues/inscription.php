@@ -5,7 +5,7 @@
  * Date: 23/05/2018
  * Time: 22:11
  */
-?>
+include('vues/fragment/indexbutton.html');?>
 <div class="form-group">
     <h1>Espace Inscription : Devenez un fier dresseur de pokémon</h1>
     <br>
@@ -23,7 +23,7 @@
             $starters = getStarter();
             foreach ($starters as $k => $v ){
                 echo "<label class='starter'>";
-                echo " <input type='radio' name='starter' value='$k' required><img src='assets/images/$k.png'></input>";
+                echo " <input type='radio' name='starter' value='$k' required><img src='https://assets.pokemon.com/assets/cms2/img/pokedex/detail/$k.png'></input>";
                 echo "</label>";
             }
             ?>

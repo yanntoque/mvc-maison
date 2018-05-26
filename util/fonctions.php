@@ -142,14 +142,14 @@ function checkDresseurMdp($nom)
 function getPokemonByDresseurId($id)
 {
     $dbcon = connexion();
-    $query = "SELECT pokemon.id, pokemon.nom FROM `inventaire`, pokemon WHERE pokemon.id = inventaire.idPokemon AND idDresseur = :idDresseur; ";
+    $query = "SELECT pokemon.id, pokemon.nom, inventaire.lieuCapture FROM `inventaire`, pokemon WHERE pokemon.id = inventaire.idPokemon AND idDresseur = :idDresseur; ";
     $prep = $dbcon->prepare($query);
     $prep->bindValue(':idDresseur', $id);
     $prep->execute();
     $resultat = $prep->fetchAll();
     $list = [];
     foreach ($resultat as $row) {
-        $list[$row['id']] = $row['nom'];
+        $list[] = [$row['id'], $row['nom'], $row['lieuCapture']];
     }
     return $list;
 }
@@ -188,4 +188,61 @@ function getInfosByPokemonId($id)
         $list[] = [$row['id'], $row['nom'], $row['courbexp'], $row['evolution'], $row['type1'], $row['type2']];
     }
     return $list;
+}
+
+/**
+ * Retourne toutes les caractéristiques de tous les pokémon
+ * @param $id
+ * @return array
+ */
+function getAllPokemonInfo()
+{
+    $dbcon = connexion();
+    $query = "SELECT * FROM  pokemon;";
+    $prep = $dbcon->prepare($query);
+    $prep->execute();
+    $resultat = $prep->fetchAll();
+    $list = [];
+    foreach ($resultat as $row) {
+        $list[] = [$row['id'], $row['nom'], $row['courbexp'], $row['evolution'], $row['type1'], $row['type2'],$row['montagne'], $row['prairie'], $row['ville'], $row['foret'], $row['plage'] ];
+    }
+    return $list;
+}
+
+
+/**
+ * Retourne toutes les caractéristiques d'un pokémon
+ * @param $id
+ * @return array
+ */
+function getLieuCaptureByPokemonId($id)
+{
+    $dbcon = connexion();
+    $query = "SELECT montagne, prairie, ville, foret, plage FROM  pokemon WHERE pokemon.id = :pokeId; ";
+    $prep = $dbcon->prepare($query);
+    $prep->bindValue(':pokeId', $id);
+    $prep->execute();
+    $resultat = $prep->fetchAll(PDO::FETCH_ASSOC);
+    $list = [];
+    foreach ($resultat as $row) {
+        $list[] = [$row['montagne'], $row['prairie'], $row['ville'], $row['foret'], $row['plage']];
+    }
+    return $list;
+}
+
+/**
+ * Insere dans l'inventaire le pokémon capturé
+ * @param $idDresseur
+ * @param $idPokemon
+ * @return bool
+ */
+function insererPokemonCapture($idDresseur, $idPokemon,$lieuCapture)
+{
+    $dbcon = connexion();
+    $query = "INSERT INTO inventaire (idDresseur, idPokemon, lieuCapture) VALUES (:idDresseur, :idPokemon, :lieuCapture);";
+    $prep = $dbcon->prepare($query);
+    $prep->bindValue(':idDresseur', $idDresseur);
+    $prep->bindValue(':idPokemon', $idPokemon);
+    $prep->bindValue(':lieuCapture', $lieuCapture);
+    return $prep->execute();
 }

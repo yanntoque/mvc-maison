@@ -5,7 +5,7 @@
  * Date: 25/05/2018
  * Time: 23:45
  */
-include("vues/fragment/homelogout.html");
+include("vues/fragment/navbarpokegame.html");
 $id = $_GET['pokeId'];
 ?>
 
@@ -27,7 +27,7 @@ $id = $_GET['pokeId'];
         echo '<h1>Fiche du pokémon ' . $k[1] . '</h1>';
         echo '<tr>';
         echo '<td>' . $k[0] . '</td>';
-        echo "<td><img src='assets/images/$k[0].png'></td>";
+        echo "<td><img src='https://assets.pokemon.com/assets/cms2/img/pokedex/detail/$k[0].png'></td>";
         echo "<td>$k[2]</td>";
         echo "<td>$k[3]</td>";
         echo "<td>$k[4]</td>";

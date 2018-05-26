@@ -5,7 +5,7 @@
  * Date: 24/05/2018
  * Time: 23:06
  */
-include("vues/fragment/homelogout.html");
+include("vues/fragment/navbarpokegame.html");
 require_once 'util/fonctions.php';
 $getDresseurId = getDresseurId($_SESSION['nom']);
 $id = reset($getDresseurId);
@@ -20,6 +20,7 @@ $credit = getCreditByDresseurId($id);
     <tr>
         <th>Identifiant dans le Pokédex</th>
         <th>Nom du pokémon</th>
+        <th>Lieu de capture du pokémon</th>
         <th>Détail</th>
     </tr>
     </thead>
@@ -27,11 +28,12 @@ $credit = getCreditByDresseurId($id);
     <?php
 
     $lstPokemon = getPokemonByDresseurId($id);
-    foreach ($lstPokemon as $k => $v) {
+    foreach ($lstPokemon as $k ) {
         echo '<tr>';
-        echo '<td>' . $k . '</td>';
-        echo "<td><img src='assets/images/$k.png'></td>";
-        echo "<td><a class='btn btn-info' href='index.php?root=detail&pokeId=$k'> Détail sur $v </a> </td>";
+        echo '<td>' . $k[0] . '</td>';
+        echo "<td>$k[1]<br><img src='https://assets.pokemon.com/assets/cms2/img/pokedex/detail/$k[0].png'></td>";
+        echo "<td>".$k[2]."</td>";
+        echo "<td><a class='btn btn-info' href='index.php?root=detail&pokeId=$k[0]'> Détail sur $k[1] </a> </td>";
         echo '</tr>';
     }
     ?>

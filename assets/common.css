@@ -1,4 +1,13 @@
+@font-face {
+    font-family: PokemonSolid;
+    src: url(PokemonSolid.ttf);
+}
+
 body {
+    font-family: PokemonSolid !important;
+    letter-spacing: 5px !important;
+    font-size: 16px !important;
+    font-size: larger;
     background-color: #3c5aa6 !important;
     color: #ffffff !important;
 }
@@ -11,13 +20,13 @@ body {
     margin: 0 auto;
 }
 
-footer {
-    position: fixed;
-    left: 0;
+.footer {
+    position: absolute;
     bottom: 0;
     width: 100%;
-    color: white;
+    height: 60px;
     text-align: center;
+    color: #FFFFFF;
 }
 
 /* Accueil du dresseur */
@@ -55,17 +64,15 @@ td {
 }
 
 .btn-home {
-    position: fixed !important;
-    top: 50% !important;
-    left: 45% !important;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%) !important;
+    margin-top: 15%;
+    text-align: center;
 }
 
-.btn-home-login {
-    position: fixed !important;
-    top: 50% !important;
-    left: 60% !important;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%) !important;
+.navbarpokegame{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.captureSelect{
+    height: 50px !important;
 }

@@ -5,6 +5,7 @@
  * Date: 24/05/2018
  * Time: 22:55
  */
+include('vues/fragment/indexbutton.html');
 ?>
 <div class="form-group">
     <h1>Espace Connexion :</h1>

@@ -83,5 +83,25 @@ switch ($root) {
     case 'pokemon':
         include('vues/pokemon.php');
         break;
+    case 'capture':
+        include('vues/capture.php');
+        if (isset($_POST['lieuCapture']) && isset($_POST['idPoke'])) {
+            $nom = $_SESSION['nom'];
+            $lieuCapture = $_POST['lieuCapture'];
+            $idPokemon = $_POST['idPoke'];
+            $getDresseurId = getDresseurId($nom);
+            $idDresseur = reset($getDresseurId);
+
+            $enregistreInventaire = insererPokemonCapture($idDresseur,$idPokemon,$lieuCapture);
+
+            if ($enregistreInventaire) {
+                echo "Vous avez attrapez un pokémon !";
+            } else {
+                echo "La capture de ce pokémon a échoué ! ";
+            }
+
+        }
+
+        break;
 }
 include("vues/fragment/footer.html");
