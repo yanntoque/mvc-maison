@@ -38,7 +38,21 @@ $credit = getCreditByDresseurId($id);
         echo "<td><br><img src='https://assets.pokemon.com/assets/cms2/img/pokedex/detail/$k[1].png'></td>";
         echo "<td>" . $k[2] . "</td>";
         echo "<td><a class='btn btn-info' href='index.php?root=detail&pokeId=$k[1]'>Détail</td>";
-        echo '<td>'.$k[3].' <span class="glyphicon glyphicon-ruble"> </td>';
+        echo '<td><span class="glyphicon glyphicon-ruble">' . $k[3];
+        if (!($id == $k[0])) {
+            echo '<br>';
+            echo '<form action="index.php?root=annonces" method="post">';
+            echo '<input class="form-control form-control-lg" name="prix"  type="hidden">';
+            echo '<input  type="hidden" name="idDresseur" value="' . $k[0] . '">';
+            echo '<input  type="hidden" name="idAcheteur" value="' . $id . '">';
+            echo '<input  type="hidden" name="idPokemon" value="' . $k[1] . '">';
+            echo '<input  type="hidden" name="debit" value="' . $k[3] . '">';
+            echo '<input  class="btn btn-success" type="submit" value="Acheter !">';
+            echo '</form>';
+        } else {
+            echo '<div> Vous ne pouvez pas acheter ce pokémon, c\'est vous qui l`avez mis en vente ! </div>';
+        }
+        echo '</td>';
         echo '</tr>';
     }
     ?>
