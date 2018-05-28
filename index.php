@@ -104,7 +104,24 @@ switch ($root) {
         break;
     case 'annonces':
         include('vues/annonces.php');
-        if ( isset($_POST['prix']) && isset($_POST['vendre']) && isset($_POST['prix']) && isset($_POST['idDresseur']) && isset($_POST['idPokemon'])) {
+        if (isset($_POST['idDresseur']) && isset($_POST['idDresseur']) && isset($_POST['idAcheteur']) && isset($_POST['idPokemon']) && (isset($_POST['debit']))) {
+            $idDresseur = $_POST['idDresseur'];
+            $idAcheteur = $_POST['idAcheteur'];
+            $idPokemon = $_POST['idPokemon'];
+            $debit = $_POST['debit'];
+            $credit = $debit;
+
+            $acheterPokemon = acheterPokemon($idDresseur, $idAcheteur, $idPokemon);
+            $debiter = debiterAcheteur($idAcheteur, $debit);
+            $crediter = crediterVendeur($idDresseur, $credit);
+            if ($acheterPokemon && $debiter && $crediter) {
+                header('location:index.php?root=pokemon');
+            } else {
+                echo "Un problème est survenu lors de l'achat ";
+            }
+        }
+
+        if (isset($_POST['prix']) && isset($_POST['vendre']) && isset($_POST['prix']) && isset($_POST['idDresseur']) && isset($_POST['idPokemon'])) {
             $idDresseur = $_POST['idDresseur'];
             $idPokemon = $_POST['idPokemon'];
             $prix = $_POST['prix'];

@@ -204,7 +204,7 @@ function getAllPokemonInfo()
     $resultat = $prep->fetchAll();
     $list = [];
     foreach ($resultat as $row) {
-        $list[] = [$row['id'], $row['nom'], $row['courbexp'], $row['evolution'], $row['type1'], $row['type2'],$row['montagne'], $row['prairie'], $row['ville'], $row['foret'], $row['plage'] ];
+        $list[] = [$row['id'], $row['nom'], $row['courbexp'], $row['evolution'], $row['type1'], $row['type2'], $row['montagne'], $row['prairie'], $row['ville'], $row['foret'], $row['plage']];
     }
     return $list;
 }
@@ -236,7 +236,7 @@ function getLieuCaptureByPokemonId($id)
  * @param $idPokemon
  * @return bool
  */
-function insererPokemonCapture($idDresseur, $idPokemon,$lieuCapture)
+function insererPokemonCapture($idDresseur, $idPokemon, $lieuCapture)
 {
     $dbcon = connexion();
     $query = "INSERT INTO inventaire (idDresseur, idPokemon, lieuCapture) VALUES (:idDresseur, :idPokemon, :lieuCapture);";
@@ -255,7 +255,7 @@ function insererPokemonCapture($idDresseur, $idPokemon,$lieuCapture)
  * @param $prix
  * @return bool
  */
-function mettreEnVentePokemon($idDresseur, $idPokemon,$vendre,$prix)
+function mettreEnVentePokemon($idDresseur, $idPokemon, $vendre, $prix)
 {
     $dbcon = connexion();
     $query = "UPDATE inventaire SET vendre= :vendre, prix= :prix WHERE idDresseur= :idDresseur AND idPokemon= :idPokemon;";
@@ -283,4 +283,60 @@ function getAllInfoPokemonEnVente()
         $list[] = [$row['idDresseur'], $row['idPokemon'], $row['lieuCapture'], $row['prix'], $row['vendre']];
     }
     return $list;
+}
+
+
+/**
+ * Permet d'acheter un pokémon
+ * @param $idDresseur
+ * @param $idAcheteur
+ * @param $idPokemon
+ * @return bool
+ */
+function acheterPokemon($idDresseur, $idAcheteur, $idPokemon)
+{
+    $dbcon = connexion();
+    $vendre = null;
+    $prix = null;
+    $query = "UPDATE inventaire SET vendre= :vendre, prix= :prix, idDresseur= :idAcheteur WHERE idDresseur= :idDresseur AND idPokemon= :idPokemon;";
+    $prep = $dbcon->prepare($query);
+    $prep->bindValue(':idDresseur', $idDresseur);
+    $prep->bindValue(':idAcheteur', $idAcheteur);
+    $prep->bindValue(':idPokemon', $idPokemon);
+    $prep->bindValue(':vendre', $vendre);
+    $prep->bindValue(':prix', $prix);
+    return $prep->execute();
+}
+
+/**
+ * Permet de débiter le crédit avec le prix du pokémon acheté
+ * @param $id
+ * @param $debit
+ * @return bool
+ */
+function debiterAcheteur($id, $debit)
+{
+    $dbcon = connexion();
+    $query = " UPDATE `dresseur` SET `credit`= credit-:debit  WHERE id= :idAcheteur;";
+    $prep = $dbcon->prepare($query);
+    $prep->bindValue(':idAcheteur', $id);
+    $prep->bindValue(':debit', $debit);
+    return $prep->execute();
+}
+
+
+/**
+ * Permet de créditer le vendeur avec le prix du pokémon vendu
+ * @param $id
+ * @param $debit
+ * @return bool
+ */
+function crediterVendeur($id, $somme)
+{
+    $dbcon = connexion();
+    $query = " UPDATE `dresseur` SET `credit`= credit+:somme  WHERE id= :idVendeur;";
+    $prep = $dbcon->prepare($query);
+    $prep->bindValue(':idVendeur', $id);
+    $prep->bindValue(':somme', $somme);
+    return $prep->execute();
 }
