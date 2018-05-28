@@ -9,7 +9,7 @@ include("vues/fragment/navbarpokegame.html");
 $id = $_GET['pokeId'];
 ?>
 
-<table class="table table-bordered">
+<table class="table table-responsive">
     <thead>
     <tr>
         <th>Identifiant dans le Pokédex</th>
