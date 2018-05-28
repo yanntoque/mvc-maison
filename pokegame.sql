@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  sam. 26 mai 2018 à 17:37
+-- Généré le :  lun. 28 mai 2018 à 21:18
 -- Version du serveur :  5.7.21-log
 -- Version de PHP :  7.1.8
 
@@ -45,7 +45,9 @@ CREATE TABLE `dresseur` (
 CREATE TABLE `inventaire` (
   `idDresseur` int(3) UNSIGNED ZEROFILL NOT NULL,
   `idPokemon` int(3) UNSIGNED ZEROFILL NOT NULL,
-  `lieuCapture` varchar(100) COLLATE latin1_general_ci DEFAULT NULL
+  `lieuCapture` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `vendre` tinyint(1) DEFAULT NULL,
+  `prix` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- --------------------------------------------------------

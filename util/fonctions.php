@@ -142,14 +142,14 @@ function checkDresseurMdp($nom)
 function getPokemonByDresseurId($id)
 {
     $dbcon = connexion();
-    $query = "SELECT pokemon.id, pokemon.nom, inventaire.lieuCapture FROM `inventaire`, pokemon WHERE pokemon.id = inventaire.idPokemon AND idDresseur = :idDresseur; ";
+    $query = "SELECT pokemon.id, pokemon.nom, inventaire.lieuCapture, inventaire.vendre FROM `inventaire`, pokemon WHERE pokemon.id = inventaire.idPokemon AND idDresseur = :idDresseur; ";
     $prep = $dbcon->prepare($query);
     $prep->bindValue(':idDresseur', $id);
     $prep->execute();
     $resultat = $prep->fetchAll();
     $list = [];
     foreach ($resultat as $row) {
-        $list[] = [$row['id'], $row['nom'], $row['lieuCapture']];
+        $list[] = [$row['id'], $row['nom'], $row['lieuCapture'], $row['vendre']];
     }
     return $list;
 }
@@ -245,4 +245,42 @@ function insererPokemonCapture($idDresseur, $idPokemon,$lieuCapture)
     $prep->bindValue(':idPokemon', $idPokemon);
     $prep->bindValue(':lieuCapture', $lieuCapture);
     return $prep->execute();
+}
+
+/**
+ * Permet de mettre le pokémon à vendre
+ * @param $idDresseur
+ * @param $idPokemon
+ * @param $vendre
+ * @param $prix
+ * @return bool
+ */
+function mettreEnVentePokemon($idDresseur, $idPokemon,$vendre,$prix)
+{
+    $dbcon = connexion();
+    $query = "UPDATE inventaire SET vendre= :vendre, prix= :prix WHERE idDresseur= :idDresseur AND idPokemon= :idPokemon;";
+    $prep = $dbcon->prepare($query);
+    $prep->bindValue(':idDresseur', $idDresseur);
+    $prep->bindValue(':idPokemon', $idPokemon);
+    $prep->bindValue(':vendre', $vendre);
+    $prep->bindValue(':prix', $prix);
+    return $prep->execute();
+}
+
+/**
+ * Retourne toutes les caractéristiques des pokémons qui sont en vente
+ * @return array
+ */
+function getAllInfoPokemonEnVente()
+{
+    $dbcon = connexion();
+    $query = "SELECT * FROM  inventaire WHERE vendre=1;";
+    $prep = $dbcon->prepare($query);
+    $prep->execute();
+    $resultat = $prep->fetchAll();
+    $list = [];
+    foreach ($resultat as $row) {
+        $list[] = [$row['idDresseur'], $row['idPokemon'], $row['lieuCapture'], $row['prix'], $row['vendre']];
+    }
+    return $list;
 }

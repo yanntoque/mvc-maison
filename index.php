@@ -92,7 +92,7 @@ switch ($root) {
             $getDresseurId = getDresseurId($nom);
             $idDresseur = reset($getDresseurId);
 
-            $enregistreInventaire = insererPokemonCapture($idDresseur,$idPokemon,$lieuCapture);
+            $enregistreInventaire = insererPokemonCapture($idDresseur, $idPokemon, $lieuCapture);
 
             if ($enregistreInventaire) {
                 echo "Vous avez attrapez un pokémon !";
@@ -101,7 +101,24 @@ switch ($root) {
             }
 
         }
+        break;
+    case 'annonces':
+        include('vues/annonces.php');
+        if ( isset($_POST['prix']) && isset($_POST['vendre']) && isset($_POST['prix']) && isset($_POST['idDresseur']) && isset($_POST['idPokemon'])) {
+            $idDresseur = $_POST['idDresseur'];
+            $idPokemon = $_POST['idPokemon'];
+            $prix = $_POST['prix'];
+            $vente = $_POST['vendre'];
+            var_dump($idDresseur);
+            $estMisEnVente = mettreEnVentePokemon($idDresseur, $idPokemon, $vente, $prix);
 
+            if ($estMisEnVente) {
+                header('location:index.php?root=annonces');
+
+            } else {
+                echo "Un problème est survenu le pokémon n'a pas été mis en vente.";
+            }
+        }
         break;
 }
 include("vues/fragment/footer.html");

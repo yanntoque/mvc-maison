@@ -17,7 +17,7 @@ $credit = getCreditByDresseurId($id);
     <h1><?php print_r($_SESSION['nom']); ?> | <?php echo $credit[0]; ?> <span class="glyphicon glyphicon-ruble"></span>
     </h1>
 </div>
-<table class="table table-bordered">
+<table class="table table-responsive">
     <thead>
     <tr>
         <th>Identifiant dans le Pokédex</th>
