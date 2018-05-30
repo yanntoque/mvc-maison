@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  lun. 28 mai 2018 à 21:18
+-- Généré le :  mer. 30 mai 2018 à 22:43
 -- Version du serveur :  5.7.21-log
 -- Version de PHP :  7.1.8
 
@@ -43,6 +43,7 @@ CREATE TABLE `dresseur` (
 --
 
 CREATE TABLE `inventaire` (
+  `idInventaire` int(11) NOT NULL,
   `idDresseur` int(3) UNSIGNED ZEROFILL NOT NULL,
   `idPokemon` int(3) UNSIGNED ZEROFILL NOT NULL,
   `lieuCapture` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
@@ -241,8 +242,9 @@ ALTER TABLE `dresseur`
 -- Index pour la table `inventaire`
 --
 ALTER TABLE `inventaire`
-  ADD PRIMARY KEY (`idDresseur`,`idPokemon`),
-  ADD KEY `fk_idPokemon` (`idPokemon`);
+  ADD PRIMARY KEY (`idInventaire`),
+  ADD KEY `idDresseur` (`idDresseur`),
+  ADD KEY `idPokemon` (`idPokemon`);
 
 --
 -- Index pour la table `pokemon`
@@ -259,6 +261,12 @@ ALTER TABLE `pokemon`
 --
 ALTER TABLE `dresseur`
   MODIFY `id` int(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `inventaire`
+--
+ALTER TABLE `inventaire`
+  MODIFY `idInventaire` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées

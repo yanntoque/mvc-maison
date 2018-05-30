@@ -104,14 +104,15 @@ switch ($root) {
         break;
     case 'annonces':
         include('vues/annonces.php');
-        if (isset($_POST['idDresseur']) && isset($_POST['idDresseur']) && isset($_POST['idAcheteur']) && isset($_POST['idPokemon']) && (isset($_POST['debit']))) {
+        if (isset($_POST['idDresseur']) && isset($_POST['idDresseur']) && isset($_POST['idAcheteur']) && isset($_POST['idPokemon']) && (isset($_POST['debit'])) && isset($_POST['idInventaire'])) {
+            $idInventaire = $_POST['idInventaire'];
             $idDresseur = $_POST['idDresseur'];
             $idAcheteur = $_POST['idAcheteur'];
             $idPokemon = $_POST['idPokemon'];
             $debit = $_POST['debit'];
             $credit = $debit;
 
-            $acheterPokemon = acheterPokemon($idDresseur, $idAcheteur, $idPokemon);
+            $acheterPokemon = acheterPokemon($idInventaire, $idDresseur, $idAcheteur, $idPokemon);
             $debiter = debiterAcheteur($idAcheteur, $debit);
             $crediter = crediterVendeur($idDresseur, $credit);
             if ($acheterPokemon && $debiter && $crediter) {
@@ -121,13 +122,14 @@ switch ($root) {
             }
         }
 
-        if (isset($_POST['prix']) && isset($_POST['vendre']) && isset($_POST['prix']) && isset($_POST['idDresseur']) && isset($_POST['idPokemon'])) {
+        if (isset($_POST['prix']) && isset($_POST['vendre']) && isset($_POST['prix']) && isset($_POST['idDresseur']) && isset($_POST['idPokemon']) && isset($_POST['idInventaire'])) {
+            $idInventaire = $_POST['idInventaire'];
             $idDresseur = $_POST['idDresseur'];
             $idPokemon = $_POST['idPokemon'];
             $prix = $_POST['prix'];
             $vente = $_POST['vendre'];
-            var_dump($idDresseur);
-            $estMisEnVente = mettreEnVentePokemon($idDresseur, $idPokemon, $vente, $prix);
+
+            $estMisEnVente = mettreEnVentePokemon($idInventaire, $idDresseur, $idPokemon, $vente, $prix);
 
             if ($estMisEnVente) {
                 header('location:index.php?root=annonces');
