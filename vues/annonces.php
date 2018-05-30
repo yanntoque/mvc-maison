@@ -47,6 +47,7 @@ $credit = getCreditByDresseurId($id);
             echo '<input  type="hidden" name="idAcheteur" value="' . $id . '">';
             echo '<input  type="hidden" name="idPokemon" value="' . $k[1] . '">';
             echo '<input  type="hidden" name="debit" value="' . $k[3] . '">';
+            echo '<input  type="hidden" name="idInventaire" value="' . $k[5] . '">';
             echo '<input  class="btn btn-success" type="submit" value="Acheter !">';
             echo '</form>';
         } else {

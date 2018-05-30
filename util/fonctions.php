@@ -142,14 +142,14 @@ function checkDresseurMdp($nom)
 function getPokemonByDresseurId($id)
 {
     $dbcon = connexion();
-    $query = "SELECT pokemon.id, pokemon.nom, inventaire.lieuCapture, inventaire.vendre FROM `inventaire`, pokemon WHERE pokemon.id = inventaire.idPokemon AND idDresseur = :idDresseur; ";
+    $query = "SELECT pokemon.id, pokemon.nom, inventaire.lieuCapture, inventaire.vendre, inventaire.idInventaire FROM `inventaire`, pokemon WHERE pokemon.id = inventaire.idPokemon AND idDresseur = :idDresseur; ";
     $prep = $dbcon->prepare($query);
     $prep->bindValue(':idDresseur', $id);
     $prep->execute();
     $resultat = $prep->fetchAll();
     $list = [];
     foreach ($resultat as $row) {
-        $list[] = [$row['id'], $row['nom'], $row['lieuCapture'], $row['vendre']];
+        $list[] = [$row['id'], $row['nom'], $row['lieuCapture'], $row['vendre'], $row['idInventaire']];
     }
     return $list;
 }
@@ -249,19 +249,21 @@ function insererPokemonCapture($idDresseur, $idPokemon, $lieuCapture)
 
 /**
  * Permet de mettre le pokémon à vendre
+ * @param $idInventaire
  * @param $idDresseur
  * @param $idPokemon
  * @param $vendre
  * @param $prix
  * @return bool
  */
-function mettreEnVentePokemon($idDresseur, $idPokemon, $vendre, $prix)
+function mettreEnVentePokemon($idInventaire, $idDresseur, $idPokemon, $vendre, $prix)
 {
     $dbcon = connexion();
-    $query = "UPDATE inventaire SET vendre= :vendre, prix= :prix WHERE idDresseur= :idDresseur AND idPokemon= :idPokemon;";
+    $query = "UPDATE inventaire SET vendre= :vendre, prix= :prix WHERE idDresseur= :idDresseur AND idPokemon= :idPokemon AND idInventaire = :idInventaire;";
     $prep = $dbcon->prepare($query);
     $prep->bindValue(':idDresseur', $idDresseur);
     $prep->bindValue(':idPokemon', $idPokemon);
+    $prep->bindValue(':idInventaire', $idInventaire);
     $prep->bindValue(':vendre', $vendre);
     $prep->bindValue(':prix', $prix);
     return $prep->execute();
@@ -280,7 +282,7 @@ function getAllInfoPokemonEnVente()
     $resultat = $prep->fetchAll();
     $list = [];
     foreach ($resultat as $row) {
-        $list[] = [$row['idDresseur'], $row['idPokemon'], $row['lieuCapture'], $row['prix'], $row['vendre']];
+        $list[] = [$row['idDresseur'], $row['idPokemon'], $row['lieuCapture'], $row['prix'], $row['vendre'], $row['idInventaire']];
     }
     return $list;
 }
@@ -288,21 +290,23 @@ function getAllInfoPokemonEnVente()
 
 /**
  * Permet d'acheter un pokémon
+ * @param $idInventaire
  * @param $idDresseur
  * @param $idAcheteur
  * @param $idPokemon
  * @return bool
  */
-function acheterPokemon($idDresseur, $idAcheteur, $idPokemon)
+function acheterPokemon($idInventaire, $idDresseur, $idAcheteur, $idPokemon)
 {
     $dbcon = connexion();
     $vendre = null;
     $prix = null;
-    $query = "UPDATE inventaire SET vendre= :vendre, prix= :prix, idDresseur= :idAcheteur WHERE idDresseur= :idDresseur AND idPokemon= :idPokemon;";
+    $query = "UPDATE inventaire SET vendre= :vendre, prix= :prix, idDresseur= :idAcheteur WHERE idDresseur= :idDresseur AND idPokemon= :idPokemon AND idInventaire = :idInventaire;";
     $prep = $dbcon->prepare($query);
     $prep->bindValue(':idDresseur', $idDresseur);
     $prep->bindValue(':idAcheteur', $idAcheteur);
     $prep->bindValue(':idPokemon', $idPokemon);
+    $prep->bindValue(':idInventaire', $idInventaire);
     $prep->bindValue(':vendre', $vendre);
     $prep->bindValue(':prix', $prix);
     return $prep->execute();
