@@ -27,3 +27,12 @@ Importer la base de données nommée pokegame.sql
 
 Accéder à l'application depuis : 
 http://localhost/mvc-maison/index.php
+
+
+Il y a deux dresseurs par défaut, voici leurs identifiants :
+
+| Pseudo  | Mot de passe |
+|---------|--------------|
+| Sacha   | root         |
+| Ondine  | root         |
+

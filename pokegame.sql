@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  mer. 30 mai 2018 à 22:43
--- Version du serveur :  5.7.21-log
+-- Généré le :  jeu. 21 juin 2018 à 12:02
+-- Version du serveur :  8.0.11
 -- Version de PHP :  7.1.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -30,11 +30,19 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `dresseur` (
   `id` int(3) UNSIGNED ZEROFILL NOT NULL,
-  `nom` varchar(32) COLLATE latin1_general_ci NOT NULL,
-  `mail` varchar(150) COLLATE latin1_general_ci NOT NULL,
-  `mdp` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `nom` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `mail` varchar(150) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `mdp` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `credit` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Déchargement des données de la table `dresseur`
+--
+
+INSERT INTO `dresseur` (`id`, `nom`, `mail`, `mdp`, `credit`) VALUES
+(001, 'Sacha', 'sacha@bourgpalette.com', '$2y$12$1Q/LYOOdGnXBq38V/.VJpeUuoL4onOGeXdiWhgu8wVn9t9zIGoVjC', 4500),
+(002, 'Ondine', 'ondine@bourgpalette.com', '$2y$12$L.H.eSp8WK3LZS/CHMYYU.CxH9DWpiqWHlXc7GPXefy.5iZnxISHe', 5500);
 
 -- --------------------------------------------------------
 
@@ -46,10 +54,19 @@ CREATE TABLE `inventaire` (
   `idInventaire` int(11) NOT NULL,
   `idDresseur` int(3) UNSIGNED ZEROFILL NOT NULL,
   `idPokemon` int(3) UNSIGNED ZEROFILL NOT NULL,
-  `lieuCapture` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `lieuCapture` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
   `vendre` tinyint(1) DEFAULT NULL,
   `prix` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Déchargement des données de la table `inventaire`
+--
+
+INSERT INTO `inventaire` (`idInventaire`, `idDresseur`, `idPokemon`, `lieuCapture`, `vendre`, `prix`) VALUES
+(1, 001, 001, NULL, NULL, NULL),
+(2, 002, 007, NULL, NULL, NULL),
+(3, 001, 021, 'VILLE', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -59,11 +76,11 @@ CREATE TABLE `inventaire` (
 
 CREATE TABLE `pokemon` (
   `id` int(3) UNSIGNED ZEROFILL NOT NULL,
-  `nom` varchar(255) COLLATE latin1_general_ci NOT NULL,
-  `courbexp` char(1) COLLATE latin1_general_ci NOT NULL,
-  `evolution` char(1) COLLATE latin1_general_ci NOT NULL,
-  `type1` varchar(255) COLLATE latin1_general_ci NOT NULL,
-  `type2` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `nom` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `courbexp` char(1) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `evolution` char(1) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type1` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type2` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `montagne` tinyint(1) NOT NULL,
   `prairie` tinyint(1) NOT NULL,
   `ville` tinyint(1) NOT NULL,
@@ -260,13 +277,13 @@ ALTER TABLE `pokemon`
 -- AUTO_INCREMENT pour la table `dresseur`
 --
 ALTER TABLE `dresseur`
-  MODIFY `id` int(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `inventaire`
 --
 ALTER TABLE `inventaire`
-  MODIFY `idInventaire` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idInventaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Contraintes pour les tables déchargées
